@@ -1,343 +1,418 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Untuk Liaaa 💖</title>
-  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/833/833472.png" />
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/833/833472.png"/>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      margin: 0;
-      background: linear-gradient(180deg, #ffd6e8, #ffe6f2);
-      font-family: 'Poppins', sans-serif;
-      color: #444;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
-      text-align: center;
-      transition: background 1.5s ease, color 1.5s ease;
-      position: relative;
+    :root{
+      --pink:#ff8fb1; --pink-2:#ffb6c1; --pink-3:#ffe6f2; --text:#444; --rose:#ff6fa8;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; height:100vh; overflow:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      background:linear-gradient(180deg,#ffd6e8,#ffe6f2); color:var(--text);
+      font-family:'Poppins',system-ui,sans-serif; text-align:center; position:relative; transition:background 1.5s ease;
+      cursor:default;
+    }
+    h1{ font-family:'Great Vibes',cursive; font-size:32px; color:var(--rose); animation:glow 2s ease-in-out infinite alternate; position:relative; z-index:5 }
+    @keyframes glow{from{text-shadow:0 0 10px #fff} to{text-shadow:0 0 25px #ffb6e0}}
+    #bokeh{ position:fixed; inset:0; z-index:0; filter:blur(30px);
+      background:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,.35) 0%, transparent 70%),
+        radial-gradient(circle at 80% 60%, rgba(255,200,220,.28) 0%, transparent 70%);
+      animation:moveBokeh 10s ease-in-out infinite alternate
+    }
+    @keyframes moveBokeh{ from{transform:translateY(0)} to{transform:translateY(-40px)} }
+
+    .btn{
+      background:var(--pink); color:#fff; border:none; border-radius:12px; padding:14px 26px; font-weight:700; font-size:18px;
+      box-shadow:0 6px 16px rgba(0,0,0,.15); cursor:pointer; transition:.18s;
+      position:relative; z-index:10;
+    }
+    .btn:hover{ transform:scale(1.05); background:#ff73a6 }
+
+    #startBtn{ margin-top:0 }
+    #message{ display:none; opacity:0; transition:opacity 1s ease; max-width:680px; padding:0 16px; line-height:1.7; color:#555; z-index:5; position:relative }
+    #message span.sparkle{ position:absolute; font-size:16px; color:#ff9cc6; animation:sparkleFade 1.3s linear forwards }
+    @keyframes sparkleFade{ 0%{opacity:1; transform:scale(.8) translateY(0)} 100%{opacity:0; transform:scale(1.6) translateY(-20px)} }
+
+    .heart{
+      position:fixed; bottom:-10px; width:18px; height:18px; background:pink; transform:rotate(45deg);
+      animation:floatUp 6s linear infinite; z-index:1
+    }
+    .heart::before,.heart::after{ content:''; position:absolute; width:18px; height:18px; background:pink; border-radius:50% }
+    .heart::before{ top:-9px; left:0 } .heart::after{ top:0; left:9px }
+    @keyframes floatUp{ 0%{transform:translateY(0) rotate(45deg);opacity:1} 100%{transform:translateY(-110vh) rotate(45deg);opacity:0} }
+
+    #quoteBox{ display:none; position:fixed; top:18px; left:50%; transform:translateX(-50%); background:rgba(255,255,255,.5);
+      border:1px solid rgba(255,255,255,.6); padding:8px 14px; border-radius:999px; font-size:14px; color:#7a5c6d; z-index:6; opacity:0; transition:opacity .6s }
+    #quoteText{ white-space:nowrap }
+
+    #loveQuestion{ display:none; opacity:0; transition:opacity 1s ease; margin-top:28px; z-index:5; position:relative }
+    #loveQuestion .btn{ margin:8px }
+    #noBtn{ position:absolute } /* kabur */
+
+    #fromText{ display:none; opacity:0; transition:opacity 1s ease; margin-top:16px; font-family:'Great Vibes',cursive; font-size:26px; color:#ff5c8a; z-index:5 }
+    #hugBtn{ display:none; opacity:0; transition:opacity 1s ease; margin-top:18px; background:#ffc6d9 }
+
+    #popup{
+      display:none; position:fixed; inset:0; z-index:50; align-items:center; justify-content:center;
+      background:rgba(255,200,230,.85); backdrop-filter:blur(4px); animation:fadeIn .8s ease
+    }
+    #popupInner{ text-align:center; color:#ff6fa8 }
+    #popupInner h2{ font-family:'Great Vibes',cursive; font-size:40px; margin:0 0 6px }
+    #popupInner p{ margin:6px 0 0; font-size:18px; color:#a64b73 }
+    @keyframes fadeIn{ from{opacity:0} to{opacity:1} }
+
+    /* Amplop terbang */
+    #envelope{
+      display:none; position:fixed; bottom:20px; right:20px; z-index:4; font-size:28px; animation:flyUp 6s ease-in forwards
+    }
+    @keyframes flyUp{ to{ transform:translate(-40vw,-80vh); opacity:0 } }
+
+    /* Music */
+    #musicBtn{
+      position:fixed; bottom:20px; right:20px; width:52px; height:52px; border-radius:50%; border:none; background:var(--pink-2); color:#fff;
+      font-size:22px; box-shadow:0 4px 14px rgba(0,0,0,.15); cursor:pointer; display:none; z-index:20
+    }
+    #musicBtn:hover{ transform:scale(1.08); background:#ff99b3 }
+
+    /* Love Meter */
+    #loveFlow{ display:none; z-index:6; margin-top:24px }
+    #seriousBox, #meterBox{ display:none; margin-top:14px }
+    #meter{ width:80vw; max-width:520px; height:18px; background:#ffe4ee; border-radius:999px; margin:12px auto; position:relative; overflow:hidden; border:1px solid #ffd1e2 }
+    #meterFill{ position:absolute; left:0; top:0; bottom:0; width:0%; background:linear-gradient(90deg,#ff9cc6,#ff73a6); box-shadow:0 0 12px rgba(255,115,166,.45) inset; transition:width .3s ease }
+    #percentNum{ font-weight:800; color:#ff4f92 }
+
+    /* Confetti hearts */
+    .c-heart{
+      position:fixed; top:-10px; font-size:18px; animation:fall 3.6s linear forwards; z-index:40; pointer-events:none
+    }
+    @keyframes fall{
+      to{ transform:translateY(110vh) rotate(360deg); opacity:.2 }
     }
 
-    h1 {
-      font-size: 32px;
-      color: #ff6fa8;
-      animation: glow 2s ease-in-out infinite alternate;
-      z-index: 5;
-      position: relative;
-    }
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #fff; }
-      to { text-shadow: 0 0 25px #ffb6e0; }
-    }
-
-    #startBtn {
-      background: #ff8fb1;
-      border: none;
-      color: white;
-      padding: 15px 32px;
-      border-radius: 10px;
-      font-size: 20px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      position: relative;
-      z-index: 10;
-    }
-    #startBtn:hover { transform: scale(1.08); background: #ff73a6; }
-
-    #message {
-      display: none;
-      font-size: 20px;
-      max-width: 600px;
-      line-height: 1.6;
-      margin-top: 20px;
-      color: #555;
-      padding: 0 20px;
-      position: relative;
-      opacity: 0;
-      transition: opacity 1s ease;
-      z-index: 5;
-    }
-
-    #message span.sparkle {
-      position: absolute;
-      font-size: 16px;
-      animation: sparkleFade 1.3s linear forwards;
-      color: #ff9cc6;
-    }
-    @keyframes sparkleFade {
-      0% { opacity: 1; transform: scale(0.8) translateY(0); }
-      100% { opacity: 0; transform: scale(1.6) translateY(-20px); }
-    }
-
-    #fromText {
-      display: none;
-      margin-top: 28px;
-      font-weight: 600;
-      color: #ff5c8a;
-      font-size: 22px;
-      opacity: 0;
-      transition: opacity 1s ease;
-      z-index: 5;
-      position: relative;
-    }
-
-    /* Heart animation */
-    .heart {
-      position: fixed;
-      bottom: -10px;
-      width: 18px;
-      height: 18px;
-      background: pink;
-      transform: rotate(45deg);
-      animation: floatUp 6s linear infinite;
-      z-index: 1;
-    }
-    .heart::before, .heart::after {
-      content: '';
-      position: absolute;
-      width: 18px;
-      height: 18px;
-      background: pink;
-      border-radius: 50%;
-    }
-    .heart::before { top: -9px; left: 0; }
-    .heart::after  { left: 9px; top: 0; }
-    @keyframes floatUp {
-      0% { transform: translateY(0) rotate(45deg); opacity: 1; }
-      100% { transform: translateY(-110vh) rotate(45deg); opacity: 0; }
-    }
-
-    /* Love question */
-    #loveQuestion {
-      display: none;
-      margin-top: 40px;
-      opacity: 0;
-      transition: opacity 1s ease;
-      z-index: 5;
-      position: relative;
-    }
-    #loveQuestion button {
-      background: #ffb6c1;
-      border: none;
-      padding: 10px 22px;
-      margin: 10px;
-      font-size: 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      color: #fff;
-      font-weight: bold;
-      transition: all 0.2s ease;
-    }
-    #loveQuestion button:hover { transform: scale(1.1); }
-    #noBtn { position: absolute; }
-
-    /* Shake effect */
-    @keyframes shake {
-      0% { transform: translate(0); }
-      25% { transform: translate(-4px, 4px); }
-      50% { transform: translate(4px, -4px); }
-      75% { transform: translate(-4px, -2px); }
-      100% { transform: translate(0); }
-    }
-
-    /* Music button */
-    #musicBtn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #ffb6c1;
-      border: none;
-      border-radius: 50%;
-      width: 52px;
-      height: 52px;
-      color: white;
-      font-size: 22px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-      cursor: pointer;
-      display: none;
-      z-index: 20;
-    }
-    #musicBtn:hover { transform: scale(1.1); background: #ff99b3; }
-
-    /* Hug button */
-    #hugBtn {
-      display: none;
-      margin-top: 25px;
-      background: #ffc6d9;
-      border: none;
-      color: #fff;
-      padding: 12px 28px;
-      font-size: 18px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-      opacity: 0;
-      transition: opacity 1s ease;
-      z-index: 5;
-      position: relative;
-    }
-    #hugBtn:hover { background: #ff9cc6; transform: scale(1.05); }
-
-    /* Popup */
-    #popup {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(255, 200, 230, 0.8);
-      align-items: center;
-      justify-content: center;
-      font-size: 36px;
-      color: #ff6fa8;
-      font-weight: bold;
-      backdrop-filter: blur(4px);
-      animation: fadeIn 0.8s ease;
-      z-index: 50;
-    }
-    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
-
-    /* Dreamy bokeh */
-    #bokeh {
-      position: fixed; inset: 0;
-      background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.3) 0%, transparent 70%),
-                  radial-gradient(circle at 80% 60%, rgba(255,200,220,0.25) 0%, transparent 70%);
-      filter: blur(30px);
-      z-index: 0;
-      animation: moveBokeh 10s ease-in-out infinite alternate;
-    }
-    @keyframes moveBokeh {
-      from { transform: translateY(0px); }
-      to { transform: translateY(-40px); }
-    }
+    /* Sparkle trail cursor */
+    .trail{ position:fixed; pointer-events:none; font-size:14px; opacity:.9; animation:trailFade .8s ease forwards; z-index:30 }
+    @keyframes trailFade{ to{ transform:translateY(-10px) scale(1.6); opacity:0 } }
   </style>
 </head>
 <body>
   <div id="bokeh"></div>
 
-  <button id="startBtn">Klik dulu Liaaa 💖</button>
+  <button id="startBtn" class="btn">Klik dulu Liaaa 💖</button>
 
   <div id="message"></div>
+
+  <div id="quoteBox"><span id="quoteText"></span></div>
+
   <div id="loveQuestion">
     <h1>Do you love me, Liaaa? 😳💞</h1>
-    <button id="yesBtn">Yes 💕</button>
-    <button id="noBtn">No 💔</button>
+    <button id="yesBtn" class="btn">Yes 💕</button>
+    <button id="noBtn" class="btn" style="background:#ffb6c1">No 💔</button>
   </div>
 
   <div id="fromText">From Rei untuk Liaaa 💌</div>
-  <button id="hugBtn">Peluk Liaa 🤗</button>
-  <div id="popup">I love you Liaaa 💗</div>
+  <button id="hugBtn" class="btn">Peluk Liaa 🤗</button>
+
+  <div id="popup">
+    <div id="popupInner">
+      <h2>I love you Liaaa 💗</h2>
+      <p>Liaaa nyaa jangan sakit yaa… Rei sayang Liaaa selaluuu 🥺💞</p>
+    </div>
+  </div>
+
+  <div id="envelope">💌</div>
+
+  <!-- Flow lanjutan -->
+  <div id="loveFlow">
+    <h1>Lia sayang nggak sama Rei? 🥺</h1>
+    <div>
+      <button id="loveYes" class="btn">Iyaa sayang bngtt 🥺💞</button>
+      <button id="loveMeh" class="btn" style="background:#ffb6c1">Biasa aja 😝</button>
+    </div>
+
+    <div id="seriousBox">
+      <button id="seriousBtn" class="btn">Serius? 😳</button>
+    </div>
+
+    <div id="meterBox">
+      <div style="margin-top:10px">Berapa % Lia sayang sama Rei? 🫶</div>
+      <input id="percentInput" type="number" min="1" max="100" value="100" style="margin-top:8px;padding:8px 10px;border-radius:10px;border:1px solid #ffc6d9; outline:none; width:120px; text-align:center"/>
+      <button id="setPercent" class="btn" style="margin-left:8px">Set</button>
+
+      <div id="meter">
+        <div id="meterFill"></div>
+      </div>
+      <div id="percentLabel"><span id="percentNum">0%</span></div>
+    </div>
+  </div>
 
   <button id="musicBtn">🎵</button>
+
+  <!-- Musik: main & ending mellow -->
   <audio id="bgMusic" loop>
     <source src="https://files.catbox.moe/x3pf5v.mp3" type="audio/mpeg">
   </audio>
+  <audio id="endMusic" loop>
+    <source src="https://files.catbox.moe/5tvvux.mp3" type="audio/mpeg">
+  </audio>
 
   <script>
-    const btn = document.getElementById("startBtn");
-    const msg = document.getElementById("message");
-    const loveQ = document.getElementById("loveQuestion");
-    const fromTxt = document.getElementById("fromText");
-    const hugBtn = document.getElementById("hugBtn");
-    const popup = document.getElementById("popup");
-    const music = document.getElementById("bgMusic");
-    const musicBtn = document.getElementById("musicBtn");
+    // Elements
+    const startBtn = document.getElementById('startBtn');
+    const msg = document.getElementById('message');
+    const loveQ = document.getElementById('loveQuestion');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn  = document.getElementById('noBtn');
+    const fromTxt = document.getElementById('fromText');
+    const hugBtn = document.getElementById('hugBtn');
+    const popup = document.getElementById('popup');
+    const popupInner = document.getElementById('popupInner');
+    const envelope = document.getElementById('envelope');
+    const quoteBox = document.getElementById('quoteBox');
+    const quoteText = document.getElementById('quoteText');
+    const musicBtn = document.getElementById('musicBtn');
+    const bgMusic = document.getElementById('bgMusic');
+    const endMusic = document.getElementById('endMusic');
 
-    const text = "Haloooo Liaa cantikss kamu cantikkk bangeetts dehh membuatt hari2 rei jadi tenang damai bahagia bngttt... semua cape2 ku yg ku genggam rasanya seperti tidak ada apa-apanya semenjak adaa liaa 😳💗 hehee cuma mau ngasihtau kalau rei syg bngt sama lia hm 🥺💞";
+    const loveFlow = document.getElementById('loveFlow');
+    const loveYes = document.getElementById('loveYes');
+    const loveMeh = document.getElementById('loveMeh');
+    const seriousBox = document.getElementById('seriousBox');
+    const seriousBtn = document.getElementById('seriousBtn');
+    const meterBox = document.getElementById('meterBox');
+    const percentInput = document.getElementById('percentInput');
+    const setPercent = document.getElementById('setPercent');
+    const meterFill = document.getElementById('meterFill');
+    const percentNum = document.getElementById('percentNum');
 
-    function typingEffect(el, txt, speed = 45) {
-      let i = 0;
-      function type() {
-        if (i < txt.length) {
+    // Main typing text
+    const mainText = "Haloooo Liaa cantikss kamu cantikkk bangeetts dehh membuatt hari2 rei jadi tenang damai bahagia bngttt... semua cape2 ku yg ku genggam rasanya seperti tidak ada apa-apanya semenjak adaa liaa 😳💗 hehee cuma mau ngasihtau kalau rei syg bngt sama lia hm 🥺💞";
+
+    // Quotes (sesuai request)
+    const quotes = [
+      "Liaaa nyaa jangan sakit yaa.. 🥺",
+      "Rei sayang Liaaa selaluuu 💞",
+      "Lia sayang ga sama Rei? 😳"
+    ];
+    let qIdx = 0, qTimer = null;
+
+    function cycleQuotes(){
+      quoteBox.style.display = 'block';
+      quoteBox.style.opacity = '1';
+      quoteText.textContent = quotes[qIdx % quotes.length];
+      qIdx++;
+      qTimer = setInterval(()=>{
+        quoteText.style.opacity = '0';
+        setTimeout(()=>{
+          quoteText.textContent = quotes[qIdx % quotes.length];
+          qIdx++;
+          quoteText.style.opacity = '1';
+        }, 350);
+      }, 2400);
+    }
+
+    // Typing
+    function sparkle(el){
+      const s = document.createElement('span');
+      s.className = 'sparkle';
+      s.innerHTML = '✨';
+      s.style.left = Math.random()*80+'%';
+      s.style.top  = Math.random()*25+'%';
+      el.appendChild(s);
+      setTimeout(()=>s.remove(),1300);
+    }
+    function typingEffect(el, txt, speed=45){
+      let i=0;
+      (function type(){
+        if(i<txt.length){
           el.innerHTML += txt.charAt(i);
-          if (Math.random() > 0.7) sparkle(el);
-          i++;
-          setTimeout(type, speed);
-        } else {
-          setTimeout(()=> {
-            loveQ.style.display = "block";
-            setTimeout(()=> loveQ.style.opacity = "1", 100);
+          if(Math.random()>0.7) sparkle(el);
+          i++; setTimeout(type, speed);
+        }else{
+          setTimeout(()=>{
+            loveQ.style.display='block';
+            setTimeout(()=> loveQ.style.opacity='1', 80);
           }, 900);
         }
-      }
-      type();
+      })();
     }
 
-    function sparkle(el) {
-      const s = document.createElement("span");
-      s.className = "sparkle";
-      s.innerHTML = "✨";
-      s.style.left = Math.random() * 80 + "%";
-      s.style.top = Math.random() * 20 + "%";
-      el.appendChild(s);
-      setTimeout(()=> s.remove(), 1300);
-    }
-
-    btn.addEventListener("click", () => {
-      btn.style.display = "none";
-      msg.style.display = "block";
-      setTimeout(()=> msg.style.opacity = "1", 100);
-      typingEffect(msg, text);
-      createHearts();
-      music.volume = 0.35;
-      music.play().catch(()=>{});
-      musicBtn.style.display = "block";
-    });
-
+    // Hearts background
     function createHearts(){
       setInterval(()=>{
-        const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.style.left = Math.random() * 100 + "%";
-        heart.style.animationDuration = (4 + Math.random() * 2) + "s";
-        document.body.appendChild(heart);
-        setTimeout(()=>heart.remove(), 6000);
-      }, 400);
+        const h = document.createElement('div');
+        h.className='heart';
+        h.style.left = Math.random()*100+'%';
+        h.style.animationDuration = (4+Math.random()*2)+'s';
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),6000);
+      }, 420);
     }
 
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
-    noBtn.addEventListener("mouseover", ()=>{
-      noBtn.style.left = Math.random() * 80 + "%";
-      noBtn.style.top = Math.random() * 80 + "%";
+    // Cursor sparkle trail
+    document.addEventListener('mousemove', (e)=>{
+      const t = document.createElement('div');
+      t.className='trail'; t.textContent='✨';
+      t.style.left=e.clientX+'px'; t.style.top=e.clientY+'px';
+      document.body.appendChild(t);
+      setTimeout(()=>t.remove(),800);
+    }, {passive:true});
+
+    // Start
+    startBtn.addEventListener('click', ()=>{
+      startBtn.style.display='none';
+      msg.style.display='block';
+      setTimeout(()=> msg.style.opacity='1',100);
+      typingEffect(msg, mainText);
+      createHearts();
+      cycleQuotes();
+      // Musik start
+      bgMusic.volume=.35; bgMusic.play().catch(()=>{});
+      musicBtn.style.display='block';
     });
 
-    yesBtn.addEventListener("click", ()=>{
-      loveQ.style.animation = "shake 0.4s";
-      setTimeout(()=> loveQ.style.animation = "", 400);
+    // No button kabur
+    noBtn.addEventListener('mouseover', ()=>{
+      noBtn.style.left = Math.random()*80+'%';
+      noBtn.style.top  = Math.random()*70+'%';
+    });
+
+    // YES → lanjut show from + hug
+    yesBtn.addEventListener('click', ()=>{
+      loveQ.style.animation='shake .4s';
+      setTimeout(()=> loveQ.style.animation='', 400);
       loveQ.innerHTML = "<h1>Hehehe aku tau kok Liaa sayang Rei 😳💞</h1>";
-      setTimeout(()=> {
-        fromTxt.style.display = "block";
-        hugBtn.style.display = "inline-block";
-        setTimeout(()=> {
-          fromTxt.style.opacity = "1";
-          hugBtn.style.opacity = "1";
-        }, 100);
-      }, 2000);
+      setTimeout(()=>{
+        fromTxt.style.display='block'; hugBtn.style.display='inline-block';
+        setTimeout(()=>{ fromTxt.style.opacity='1'; hugBtn.style.opacity='1'; }, 80);
+      }, 1800);
     });
 
-    hugBtn.addEventListener("click", ()=>{
-      hugBtn.innerText = "🤗🤗🤗";
-      for(let i=0;i<20;i++){
-        setTimeout(()=>sparkle(hugBtn), i*80);
+    // Hug → popup + envelope + lanjut flow pertanyaan baru
+    hugBtn.addEventListener('click', ()=>{
+      // sparkle di tombol
+      for(let i=0;i<16;i++){ setTimeout(()=>sparkle(hugBtn), i*70); }
+      setTimeout(()=>{
+        popup.style.display='flex';
+        // envelope terbang
+        envelope.style.display='block';
+      }, 1200);
+
+      // setelah beberapa detik, tutup popup & tampilkan flow baru
+      setTimeout(()=>{
+        popup.style.display='none';
+        envelope.style.display='none';
+        // stop quote rotator
+        if(qTimer) clearInterval(qTimer), quoteBox.style.opacity='0';
+        // ganti musik ke ending mellow
+        bgMusic.pause(); endMusic.volume=.35; endMusic.play().catch(()=>{});
+        // tampilkan flow tambahan
+        loveFlow.style.display='block';
+      }, 3000);
+    });
+
+    // Flow: Lia sayang gak?
+    // tombol "biasa aja" kabur
+    loveMeh.addEventListener('mouseover', ()=>{
+      loveMeh.style.position='relative';
+      loveMeh.style.left = (Math.random()*160-80)+'px';
+      loveMeh.style.top  = (Math.random()*80-40)+'px';
+    });
+
+    // "Iyaa sayang bngtt"
+    loveYes.addEventListener('click', ()=>{
+      seriousBox.style.display='block';
+    });
+
+    // "Serius?"
+    seriousBtn.addEventListener('click', ()=>{
+      meterBox.style.display='block';
+      // scroll kecil ke meter (mobile)
+      setTimeout(()=> window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'}), 50);
+    });
+
+    // Set percent → animasi bar + counter + confetti + pesan akhir kecil
+    setPercent.addEventListener('click', ()=>{
+      let val = parseInt(percentInput.value || '0',10);
+      if(isNaN(val) || val<1) val=1;
+      if(val>100) val=100;
+
+      // animate number & bar
+      let cur=0;
+      percentNum.textContent='0%';
+      meterFill.style.width='0%';
+
+      const step = () =>{
+        if(cur < val){
+          cur += Math.ceil(Math.max(1, (val-cur)/20));
+          if(cur>val) cur=val;
+          percentNum.textContent = cur + '%';
+          meterFill.style.width = cur + '%';
+          requestAnimationFrame(step);
+        }else{
+          // confetti hearts
+          dropConfetti();
+          // pesan kecil
+          setTimeout(()=>{
+            const endLine = document.createElement('div');
+            endLine.style.marginTop='10px';
+            endLine.style.color='#ff4f92';
+            endLine.style.fontWeight='700';
+            endLine.textContent = `Aaaa Liaaa nyaa sayang Rei ${val}%!! 😭💗 Rei bahagia bangett~`;
+            meterBox.appendChild(endLine);
+          }, 400);
+        }
+      };
+      requestAnimationFrame(step);
+    });
+
+    function dropConfetti(){
+      for(let i=0;i<50;i++){
+        setTimeout(()=>{
+          const c = document.createElement('div');
+          c.className='c-heart';
+          c.textContent = ['💗','💖','💕','💞'][Math.floor(Math.random()*4)];
+          c.style.left = Math.random()*100+'%';
+          c.style.fontSize = (16+Math.random()*16)+'px';
+          c.style.animationDuration = (2.8+Math.random()*1.6)+'s';
+          document.body.appendChild(c);
+          setTimeout(()=>c.remove(),3600);
+        }, i*35);
       }
-      setTimeout(()=> popup.style.display = "flex", 1500);
-    });
+    }
 
+    // Music toggle
     let playing = true;
-    musicBtn.addEventListener("click", ()=>{
-      if(playing){
-        music.pause();
-        musicBtn.innerText = "🔇";
-      } else {
-        music.play();
-        musicBtn.innerText = "🎵";
-      }
+    musicBtn.addEventListener('click', ()=>{
+      // prefer endMusic if playing, else bgMusic
+      const prim = (endMusic.currentTime>0 && !endMusic.paused) ? endMusic : bgMusic;
+      if(playing){ prim.pause(); musicBtn.textContent='🔇'; }
+      else { prim.play().catch(()=>{}); musicBtn.textContent='🎵'; }
       playing = !playing;
+    });
+
+    // Easter egg: triple click cepat
+    let clicks = 0, lastClick = 0;
+    document.addEventListener('click', ()=>{
+      const now = Date.now();
+      if(now - lastClick < 500) clicks++; else clicks=1;
+      lastClick = now;
+      if(clicks>=3){
+        clicks=0;
+        const eg = document.createElement('div');
+        eg.style.position='fixed'; eg.style.left='50%'; eg.style.top='50%';
+        eg.style.transform='translate(-50%,-50%)'; eg.style.background='rgba(255,255,255,.8)';
+        eg.style.border='1px solid #ffd1e2'; eg.style.padding='10px 14px'; eg.style.borderRadius='12px';
+        eg.style.boxShadow='0 8px 24px rgba(0,0,0,.15)'; eg.style.zIndex=60; eg.style.fontWeight='700';
+        eg.textContent='Hehee ketauan deh Liaa nyaa 😳💞';
+        document.body.appendChild(eg);
+        setTimeout(()=> eg.remove(), 1400);
+      }
     });
   </script>
 </body>

@@ -19,7 +19,7 @@
       display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
       background:linear-gradient(180deg,#ffd6e8,#ffe6f2); color:var(--text);
       font-family:'Poppins',system-ui,sans-serif; text-align:center; position:relative; transition:background 1.5s ease;
-      padding-bottom:calc(24px + var(--safe-bot)); /* ruang aman iPhone */
+      padding-bottom:calc(24px + var(--safe-bot));
     }
     h1{ font-family:'Great Vibes',cursive; font-size:32px; color:var(--rose); animation:glow 2s ease-in-out infinite alternate; position:relative; z-index:5; margin:10px 12px }
     @keyframes glow{from{text-shadow:0 0 10px #fff} to{text-shadow:0 0 25px #ffb6e0}}
@@ -53,30 +53,32 @@
     .heart::before{ top:-9px; left:0 } .heart::after{ top:0; left:9px }
     @keyframes floatUp{ 0%{transform:translateY(0) rotate(45deg);opacity:1} 100%{transform:translateY(-110vh) rotate(45deg);opacity:0} }
 
-    /* Quote box selalu tengah & nggak keluar layar */
+    /* QUOTE BOX — sekarang hanya muncul di AKHIR */
     #quoteBox{
       display:none; position:fixed; left:50%; top:10px; transform:translateX(-50%);
-      background:rgba(255,255,255,.7); border:1px solid rgba(255,255,255,.8);
+      background:rgba(255,255,255,.85); border:1px solid rgba(255,255,255,.9);
       padding:8px 12px; border-radius:999px; font-size:14px; color:#7a5c6d; z-index:6; opacity:0; transition:opacity .6s;
-      max-width:90vw; box-shadow:var(--shadow)
+      max-width:92vw; box-shadow:var(--shadow); align-items:center; gap:8px
     }
+    #quoteBoxInner{ display:flex; align-items:center; gap:8px }
     #quoteText{ white-space:normal }
+    #quoteClose{ cursor:pointer; font-weight:800; padding:0 6px }
 
     /* Container pertanyaan agar tombol kabur tetap di dalam area */
     #loveQuestion{ display:none; opacity:0; transition:opacity 1s ease; margin-top:24px; z-index:5; position:relative; min-height:140px }
     #loveQuestion .btn{ margin:8px }
-    .runner{ position:absolute } /* tombol kabur akan diberi class ini */
+    .runner{ position:absolute }
 
     #fromText{ display:none; opacity:0; transition:opacity 1s ease; margin-top:16px; font-family:'Great Vibes',cursive; font-size:26px; color:#ff5c8a; z-index:5 }
     #hugBtn{ display:none; opacity:0; transition:opacity 1s ease; margin-top:18px; background:#ffc6d9 }
 
-    /* Popup selalu center & rapih di iPhone */
+    /* POPUP tengah */
     #popup{
       display:none; position:fixed; inset:0; z-index:50; align-items:center; justify-content:center;
       background:rgba(255,200,230,.85); backdrop-filter:blur(4px); padding:24px; animation:fadeIn .8s ease
     }
     #popupInner{
-      width:100%; max-width:480px; background:rgba(255,255,255,.8);
+      width:100%; max-width:480px; background:rgba(255,255,255,.9);
       border:1px solid #ffd1e2; border-radius:16px; padding:18px 16px;
       box-shadow:0 8px 26px rgba(0,0,0,.15); word-break:break-word
     }
@@ -90,7 +92,7 @@
     }
     @keyframes flyUp{ to{ transform:translate(-40vw,-80vh); opacity:0 } }
 
-    /* Music toggle: selalu pojok kanan bawah */
+    /* Music toggle */
     #musicBtn{
       position:fixed; right:16px; bottom:calc(16px + var(--safe-bot));
       width:52px; height:52px; border-radius:50%; border:none; background:var(--pink-2); color:#fff;
@@ -109,9 +111,7 @@
     .c-heart{
       position:fixed; top:-10px; font-size:18px; animation:fall 3.6s linear forwards; z-index:40; pointer-events:none
     }
-    @keyframes fall{
-      to{ transform:translateY(110vh) rotate(360deg); opacity:.2 }
-    }
+    @keyframes fall{ to{ transform:translateY(110vh) rotate(360deg); opacity:.2 } }
 
     /* Sparkle trail cursor */
     .trail{ position:fixed; pointer-events:none; font-size:14px; opacity:.9; animation:trailFade .8s ease forwards; z-index:30 }
@@ -130,7 +130,6 @@
     .wa-actions{ display:flex; gap:8px; align-items:center; margin-top:10px }
     .mini-muted{ font-size:12px; opacity:.75 }
 
-    /* Responsive tweaks */
     @media (max-width:420px){
       h1{ font-size:28px }
       #popupInner h2{ font-size:34px }
@@ -145,7 +144,13 @@
 
     <div id="message"></div>
 
-    <div id="quoteBox"><span id="quoteText"></span></div>
+    <!-- QUOTE: sekarang berisi teks + tombol close, tapi TIDAK dipakai di awal -->
+    <div id="quoteBox" role="status" aria-live="polite">
+      <div id="quoteBoxInner">
+        <span id="quoteText"></span>
+        <span id="quoteClose" aria-label="Tutup">×</span>
+      </div>
+    </div>
 
     <div id="loveQuestion">
       <h1>Do you love me, Liaaa? 😳💞</h1>
@@ -192,17 +197,17 @@
 
       <!-- Kartu kirim WA -->
       <div id="waCard" class="wa-card">
-        <div style="font-weight:700; margin-bottom:6px">Kirim Pesan ke WhatsApp 💌</div>
+        <div style="font-weight:700; margin-bottom:6px">Mau ngirim pesan ke rei? 💌</div>
         <div class="wa-row">
           <input id="fbFrom" placeholder="Dari (namamu)" />
           <input id="fbTo"   placeholder="Untuk (namanya)" />
         </div>
         <div class="wa-row">
-          <textarea id="fbMsg" placeholder="Tulis pesan manis untuk dia di sini..."></textarea>
+          <textarea id="fbMsg" placeholder="Tulis pesan untuk rei di sini..."></textarea>
         </div>
         <div class="wa-actions">
-          <button id="gbWA" class="btn">Kirim via WhatsApp</button>
-          <span class="mini-muted">Pesan akan dibuka di WA sebelum dikirim 👌</span>
+          <button id="gbWA" class="btn">Mau ngirim pesan nda syg?</button>
+          <span class="mini-muted">nih disini lansgung aja nanti pencet2in yaaa 👌</span>
         </div>
       </div>
     </div>
@@ -231,10 +236,10 @@
     const fromTxt = document.getElementById('fromText');
     const hugBtn = document.getElementById('hugBtn');
     const popup = document.getElementById('popup');
-    const popupInner = document.getElementById('popupInner');
     const envelope = document.getElementById('envelope');
     const quoteBox = document.getElementById('quoteBox');
     const quoteText = document.getElementById('quoteText');
+    const quoteClose = document.getElementById('quoteClose');
     const musicBtn = document.getElementById('musicBtn');
     const bgMusic = document.getElementById('bgMusic');
     const endMusic = document.getElementById('endMusic');
@@ -259,7 +264,7 @@
     // Main typing text
     const mainText = "Haloooo Liaa cantikss kamu cantikkk bangeetts dehh membuatt hari2 rei jadi tenang damai bahagia bngttt... semua cape2 ku yg ku genggam rasanya seperti tidak ada apa-apanya semenjak adaa liaa 😳💗 hehee cuma mau ngasihtau kalau rei syg bngt sama lia hm 🥺💞";
 
-    // Quotes
+    // Quotes (dipakai HANYA DI AKHIR)
     const quotes = [
       "Liaaa nyaa jangan sakit yaa.. 🥺",
       "Rei sayang Liaaa selaluuu 💞",
@@ -268,7 +273,7 @@
     let qIdx = 0, qTimer = null;
 
     function cycleQuotes(){
-      quoteBox.style.display = 'block';
+      quoteBox.style.display = 'flex';
       quoteBox.style.opacity = '1';
       quoteText.textContent = quotes[qIdx % quotes.length];
       qIdx++;
@@ -282,7 +287,14 @@
       }, 2400);
     }
 
-    // Typing
+    if (quoteClose){
+      quoteClose.addEventListener('click', ()=>{
+        quoteBox.style.opacity = '0';
+        setTimeout(()=>{ quoteBox.style.display='none'; }, 300);
+        if(qTimer) clearInterval(qTimer);
+      });
+    }
+
     function sparkle(el){
       const s = document.createElement('span');
       s.className = 'sparkle';
@@ -308,7 +320,6 @@
       })();
     }
 
-    // Hearts background
     function createHearts(){
       const heartTimer = setInterval(()=>{
         const h = document.createElement('div');
@@ -318,11 +329,9 @@
         document.body.appendChild(h);
         setTimeout(()=>h.remove(),6000);
       }, 420);
-      // hentikan jika halaman jadi berat (opsional)
       setTimeout(()=>clearInterval(heartTimer), 120000);
     }
 
-    // Cursor sparkle trail (iOS aman)
     document.addEventListener('mousemove', (e)=>{
       const t = document.createElement('div');
       t.className='trail'; t.textContent='✨';
@@ -331,49 +340,35 @@
       setTimeout(()=>t.remove(),800);
     }, {passive:true});
 
-    // Start
+    // START — TIDAK lagi memanggil cycleQuotes() di awal
     startBtn.addEventListener('click', ()=>{
       startBtn.style.display='none';
       msg.style.display='block';
       setTimeout(()=> msg.style.opacity='1',100);
       typingEffect(msg, mainText);
       createHearts();
-      cycleQuotes();
-      // Musik start
       bgMusic.volume=.35; bgMusic.play().catch(()=>{});
       musicBtn.style.display='block';
-      // scroll sedikit agar nyaman di iPhone kecil
       setTimeout(()=> window.scrollTo({top:0, behavior:'smooth'}), 50);
     });
 
-    // Utility: pindahkan tombol kabur di dalam parent visible area
     function moveInsideParent(btn){
       const parent = btn.parentElement || document.body;
       const pRect = parent.getBoundingClientRect();
       const bRect = btn.getBoundingClientRect();
-      // ruang sisa
       const maxLeft = Math.max(0, pRect.width - bRect.width - 8);
       const maxTop  = Math.max(0, pRect.height - bRect.height - 8);
-
-      // kalau parent terlalu pendek, tinggikan sedikit supaya ada area lari
       if (pRect.height < 140 && parent === loveQ) parent.style.minHeight = '160px';
-
       const left = Math.random() * maxLeft;
       const top  = Math.random() * maxTop;
-
-      // set relatif terhadap parent
-      const px = Math.round(left);
-      const py = Math.round(top);
-      btn.style.left = px + 'px';
-      btn.style.top  = py + 'px';
+      btn.style.left = Math.round(left) + 'px';
+      btn.style.top  = Math.round(top)  + 'px';
     }
 
-    // “No” kabur (support iPhone: touchstart)
     ['mouseenter','touchstart'].forEach(evt=>{
       noBtn.addEventListener(evt, ()=> moveInsideParent(noBtn), {passive:true});
     });
 
-    // YES → lanjut show from + hug, sembunyikan tombol No supaya bersih
     yesBtn.addEventListener('click', ()=>{
       loveQ.style.animation='shake .4s';
       setTimeout(()=> loveQ.style.animation='', 400);
@@ -384,54 +379,41 @@
       }, 1200);
     });
 
-    // Hug → popup + envelope → lanjut flow, sembunyikan elemen lama biar rapi
     hugBtn.addEventListener('click', ()=>{
       for(let i=0;i<16;i++){ setTimeout(()=>sparkle(hugBtn), i*70); }
-      setTimeout(()=>{
-        popup.style.display='flex';
-        envelope.style.display='block';
-      }, 900);
+      setTimeout(()=>{ popup.style.display='flex'; envelope.style.display='block'; }, 900);
 
       setTimeout(()=>{
         popup.style.display='none';
         envelope.style.display='none';
-        if(qTimer) clearInterval(qTimer), quoteBox.style.opacity='0';
         bgMusic.pause(); endMusic.volume=.35; endMusic.play().catch(()=>{});
-        // tampilkan flow tambahan
         loveFlow.style.display='block';
-        // rapikan: sembunyikan komponen awal
         fromTxt.style.display='none';
         hugBtn.style.display='none';
         loveQ.style.display='none';
         msg.style.marginBottom = '8px';
-        // scroll ke flow
         loveFlow.scrollIntoView({behavior:'smooth', block:'start'});
       }, 2800);
     });
 
-    // “Biasa aja” kabur
     ['mouseenter','touchstart'].forEach(evt=>{
       loveMeh.addEventListener(evt, ()=> moveInsideParent(loveMeh), {passive:true});
     });
 
-    // "Iyaa sayang bngtt" → munculkan “Serius?”
     loveYes.addEventListener('click', ()=>{
       seriousBox.style.display='block';
-      // Reduksi tombol lain biar fokus
       loveMeh.style.display='none';
       loveYes.disabled = true;
       loveYes.textContent = '😳❤️';
       setTimeout(()=> seriousBox.scrollIntoView({behavior:'smooth'}), 50);
     });
 
-    // "Serius?" → tampil meter, sembunyikan tombol sebelumnya biar ringkas
     seriousBtn.addEventListener('click', ()=>{
       meterBox.style.display='block';
       seriousBox.style.display='none';
       setTimeout(()=> meterBox.scrollIntoView({behavior:'smooth'}), 50);
     });
 
-    // Set percent → animasi bar + counter + confetti + tampil WA form
     setPercent.addEventListener('click', ()=>{
       let val = parseInt(percentInput.value || '0',10);
       if(isNaN(val) || val<1) val=1;
@@ -458,9 +440,14 @@
             endLine.textContent = `Aaaa Liaaa nyaa sayang Rei ${val}%!! 😭💗 Rei bahagia bangett~`;
             meterBox.appendChild(endLine);
 
-            // tampilkan kartu WA
+            // === DI SINI BARU MULAI QUOTES & TAMPIL WA CARD ===
             waCard.style.display='block';
             waCard.scrollIntoView({behavior:'smooth'});
+
+            // mulai rotasi quote (AKHIR)
+            if(qTimer) clearInterval(qTimer);
+            qIdx = 0;
+            cycleQuotes();
           }, 350);
         }
       };
@@ -482,7 +469,6 @@
       }
     }
 
-    // Music toggle (prioritaskan musik yang lagi aktif)
     let playing = true;
     musicBtn.addEventListener('click', ()=>{
       const prim = (endMusic.currentTime>0 && !endMusic.paused) ? endMusic : bgMusic;
@@ -491,7 +477,6 @@
       playing = !playing;
     });
 
-    // Easter egg: triple click cepat
     let clicks = 0, lastClick = 0;
     document.addEventListener('click', ()=>{
       const now = Date.now();
@@ -515,10 +500,8 @@
       const from = fbFrom?.value?.trim() || 'Anon';
       const to   = fbTo?.value?.trim()   || 'Lia';
       const note = fbMsg?.value?.trim()  || 'Haii 💗';
-
       return `Untuk: ${to}\nDari: ${from}\n\nPesan:\n${note}\n\n(Dikirim dari halaman love-letter)`;
     }
-
     if (gbWA) {
       gbWA.addEventListener('click', () => {
         const payload = buildMessage(); if (!payload) return;
@@ -527,7 +510,6 @@
       });
     }
 
-    // Pastikan tombol kabur punya posisi awal masuk area
     window.addEventListener('load', ()=>{
       moveInsideParent(noBtn);
       moveInsideParent(loveMeh);
